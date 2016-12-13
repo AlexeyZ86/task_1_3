@@ -1,0 +1,21 @@
+package Lesson_1.q_3;
+
+public class RunMain {
+    public static void main(String[] args) {
+
+        Container info = new Container(2016, "My String!", 55.55 );
+
+        Saver saver = new Saver("c:\\serial.txr", info);
+        saver.writeFile();
+
+        Container newInfo = new Container();
+        saver.setObj(newInfo);
+        saver.readFile();
+
+
+        System.out.println(info);
+        System.out.println(newInfo);
+
+
+    }
+}
