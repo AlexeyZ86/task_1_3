@@ -1,0 +1,53 @@
+package Lesson_1.q_3;
+
+public class Container {
+    @Save
+    private int intN;
+    @Save
+    private String stringN;
+    @Save
+    public double doublN;
+
+    public Container() {
+    }
+
+    public Container(int intN, String stringN, double doublN) {
+        this.intN = intN;
+        this.stringN = stringN;
+        this.doublN = doublN;
+    }
+
+    public int getIntN() {
+        return intN;
+    }
+
+    public void setIntN(int intN) {
+        this.intN = intN;
+    }
+
+    public String getStringN() {
+        return stringN;
+    }
+
+    public void setStringN(String stringN) {
+        this.stringN = stringN;
+    }
+
+
+    public double getDoublN() {
+        return doublN;
+    }
+
+    public void setDoublN(double doublN) {
+        this.doublN = doublN;
+    }
+    @Override
+    public String toString() {
+        return "Container{" +
+                "intN=" + intN +
+                ", stringN='" + stringN + '\'' +
+                ", doublN=" + doublN +
+                '}';
+    }
+
+}
