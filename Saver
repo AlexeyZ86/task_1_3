@@ -1,0 +1,76 @@
+package Lesson_1.q_3;
+
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+public class Saver {
+
+    private String fileName;
+    private Object obj;
+
+    public Saver() {
+    }
+
+    public Saver(String fileName, Object obj) {
+        this.fileName = fileName;
+        this.obj = obj;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
+    public void writeFile(){
+        try (PrintWriter printWriter = new PrintWriter(fileName)){
+            Field[] fields = obj.getClass().getDeclaredFields();
+            for (Field field: fields){
+                if (field.isAnnotationPresent(Save.class)){
+                    if (Modifier.isPrivate(field.getModifiers())){
+                        field.setAccessible(true);
+                    }
+                    printWriter.println(field.get(obj));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readFile(){
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
+            Field[] fields = obj.getClass().getDeclaredFields();
+            for (Field field: fields){
+                if (field.isAnnotationPresent(Save.class)){
+                    if (Modifier.isPrivate(field.getModifiers())) {
+                        field.setAccessible(true);
+                    }
+                    String reader = br.readLine();
+                    if (field.getType() == int.class)
+                        field.set(obj, Integer.parseInt(reader));
+                    else if (field.getType() == String.class)
+                        field.set(obj, reader);
+                    else if (field.getType() == double.class)
+                        field.set(obj, Double.parseDouble(reader));
+                    }
+                }
+            } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
